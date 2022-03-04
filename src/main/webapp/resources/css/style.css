@@ -1,0 +1,37 @@
+@charset "UTF-8";
+.id_ok{color: blue; display: none;}
+.id_already{color: red; display: none;}
+.nick_ok{color: blue; display: none;}
+.nick_already{color: red; display: none;}
+table {
+	margin-left: auto; 
+	margin-right: auto;
+	margin-top: 100px;
+}
+html, body{
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+#subTitle{
+	text-align: center; 
+	margin-top: 40px; 
+}
+.wrapper{
+  height : auto;
+  min-height: 100%;
+  padding-bottom: 100px;
+}
+footer {
+  /* footer를 aside위에 올리기 위해 사용(부유객체) */
+  position: relative;
+  text-align: center;
+  bottom: 0;
+  height: 100px;
+  width: 100%;
+  line-height: 100px;
+  color: #8a8c8f;
+  border-top: 1px solid #dee5e7;
+  background-color: #f2f2f2;
+  transform : translateY(-100%);
+}

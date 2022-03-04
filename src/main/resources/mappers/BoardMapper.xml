@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.project.my.BoardMapper">
+	<sql id="find">
+		<if test="findkey=='nickname'">
+			and nickname like concat('%',#{findvalue},'%')
+		</if>
+		<if test="findkey=='title'">
+			and title like concat('%',#{findvalue},'%')
+		</if>
+		<if test="findkey=='content'">
+			and content like concat('%',#{findvalue},'%')
+		</if>
+		<if test="findkey=='ticon'">
+			and title like concat('%',#{findvalue},'%')
+			or content like concat('%',#{findvalue},'%')
+		</if>
+	</sql>
+	<select id="selectList" resultType="Board">
+		select b.boardnum, b.title, b.regdate, b.truserid, m.nickname from board b
+		join member m on b.wruserid = m.userid
+		where 1 = 1
+		<include refid="find"/>
+		order by boardnum desc
+		limit #{startnum}, #{perpage}
+	</select>
+	<select id="selectOne" resultType="Board">
+		select b.*, m.nickname from board b
+		join member m on b.wruserid = m.userid
+		where boardnum = #{boardnum}
+	</select>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="boardnum">
+		insert into board(wruserid, title, content, ip)
+		values(#{wruserid}, #{title}, #{content}, #{ip})
+	</insert>
+	<update id="update">
+		update board set
+		title = #{title},
+		content = #{content},
+		modidate = now()
+		where boardnum = #{boardnum}
+	</update>
+	<delete id="delete">
+		delete from board
+		where boardnum = #{boardnum}
+	</delete>
+	<select id="selectTotCnt" resultType="int">
+		select count(*) totcnt
+		from board
+		where 1 = 1
+		<include refid="find"/>
+	</select>
+	<update id="updateReadCnt">
+		update board
+		set readcnt = readcnt + 1
+		where boardnum = #{boardnum}
+	</update>
+	<update id="tradeSuccess">
+		update board
+		set truserid = #{truserid}
+		where boardnum = #{boardnum}
+	</update>
+	<select id="buyList" resultType="Board">
+		select b.boardnum, b.title, b.review, m.nickname from board b
+		join member m on b.wruserid = m.userid
+		where truserid = #{truserid}
+		order by review
+	</select>
+	<select id="sellList" resultType="Board">
+		select b.boardnum, b.title, b.truserid, b.review, m.nickname from board b
+		left join member m on b.truserid = m.userid
+		where wruserid = #{wruserid}
+		order by review
+	</select>
+	<update id="reviewCheck">
+		update board
+		set review = 1
+		where boardnum = #{boardnum}
+	</update>
+</mapper>

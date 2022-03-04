@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.project.my.ReviewMapper">
+	<insert id="insert">
+		insert into review (boardnum, grade, content)
+		values(#{boardnum},#{grade},#{content})
+	</insert>
+	<select id="selectOne" resultType="Review">
+		select  r.*, b.truserid from review r
+		join board b on r.boardnum = b.boardnum
+		where r.boardnum = #{boardnum}
+	</select>
+	<update id="update">
+		update review
+		set grade = #{grade}, content = #{content}
+		where boardnum = #{boardnum}
+	</update>
+	<select id="gradeAvg" resultType="int">
+		select round(avg(grade),2) from board b
+		join review r on b.boardnum = r.boardnum
+		where b.wruserid = #{wruserid}
+	</select>
+</mapper>
