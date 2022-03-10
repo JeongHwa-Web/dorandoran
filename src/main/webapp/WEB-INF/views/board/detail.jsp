@@ -26,7 +26,7 @@
 				return;
 			}
 			$.ajax({
-				url : '${path}/reply/add',
+				url : '${path}/reply/',
 				type : 'post',
 				data : JSON.stringify({boardnum,content}),
 				contentType : 'application/json',
@@ -63,7 +63,7 @@
 			return;
 		}
 		$.ajax({
-			url : '${path}/reply/remove/'+replynum,
+			url : '${path}/reply/'+replynum,
 			type : 'delete',
 			dataType : 'text',
 			success : function(data) {				
@@ -79,7 +79,7 @@
 	function btnReplyModify(replynum) {
 		var content = $('#replyEditContent').val();
 		$.ajax({
-			url: '${path}/reply/modify',
+			url: '${path}/reply/',
 			type : 'put',
 			data : JSON.stringify({replynum, content}),
 			contentType : 'application/json',

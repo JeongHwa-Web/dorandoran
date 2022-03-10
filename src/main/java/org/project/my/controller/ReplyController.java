@@ -30,7 +30,7 @@ public class ReplyController {
 		return replyList;
 	}
 	
-	@PostMapping("/add")
+	@PostMapping("/")
 	public void replyAdd(@RequestBody Reply reply, HttpServletRequest request, HttpSession session) {
 		String userid = (String) session.getAttribute("userid");
 		reply.setUserid(userid);
@@ -39,14 +39,14 @@ public class ReplyController {
 		replyService.insert(reply);
 	}
 	
-	@PutMapping("/modify")
+	@PutMapping("/")
 	public void replyModify(@RequestBody Reply reply, HttpServletRequest request) {
 		String ip = request.getRemoteAddr();
 		reply.setIp(ip);
 		replyService.update(reply);
 	}
 	
-	@DeleteMapping("/remove/{replynum}")
+	@DeleteMapping("{replynum}")
 	public void replyRemove(@PathVariable int replynum) {
 		replyService.delete(replynum);
 	}

@@ -45,8 +45,7 @@ public class junitTest {
 		member.setEmail("hjh5446");
 		member.setName("홍정화");
 		member.setCallnum("010-1111-1111");
-		int cnt = memberDAO.insert(member);
-		System.out.println(cnt);
+		memberDAO.insert(member);
 	}
 	
 	@Test
